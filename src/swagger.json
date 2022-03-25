@@ -1,0 +1,127 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Challenge: Introduction SOLID",
+    "description": "Practicing SOLID code principles.",
+    "version":"1.0.0",
+    "contact": "idelmariocorreia@hotmail.com"
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "description": "To create, add the 'name' and 'email'.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "User name sample",
+                  "email": "User email sample"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "This user already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "List all users",
+        "description": "List all users if logged user is admin.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "user_id",
+            "description": "user id for identification",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "example": "ea057146-f68c-4124-b8b8-4279189acb81"
+            
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "User not found"
+          },
+          "401": {
+            "description": "This user is not admin"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user info",
+        "description": "To get a user, you need the route parameter 'user_id'",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "description": "user id for search",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "example": "ea057146-f68c-4124-b8b8-4279189acb81"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Make a user admin",
+        "description": "To make the user admin, you need the 'user_id' route parameter",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "description": "user id for update",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "example": "ea057146-f68c-4124-b8b8-4279189acb81"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Ok"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  }
+}
